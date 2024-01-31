@@ -9,45 +9,50 @@ public class MainMenu {
     static int second;
     static String login;
     static String pass;
+    static boolean isValid;
 
 
     public static void main(String[] args) {
         typesOfEquations type = new typesOfEquations();
         showInformation info = new showInformation();
         UserManager user = new UserManager();
-        user.addUser("user","pass1");
+        user.addUser("user", "pass1");
 
-        info.login();
-        login = scanner.next();
-        info.password();
-        pass = scanner.next();
+        do {
+            System.out.println("------Wprowadź dane do zalogowania się------");
+            info.login();
+            login = scanner.nextLine().trim();
+            info.password();
+            pass = scanner.nextLine().trim();
 
-        if(user.checkPassword(login,pass)){
-            info.menuProgram();
-            choose = scanner.nextInt();
-            switch (choose) {
-                case 1, 2, 3, 4 -> {
-                    info.firstNumber();
-                    first = scanner.nextInt();
-                    info.secondNumber();
-                    second = scanner.nextInt();
-                    if (choose == 1) {
-                        System.out.println("Wynik to: " + type.addition(first, second));
-
-                    } else if (choose == 2) {
-                        System.out.println("Wynik to: " + type.substraction(first, second));
-
-                    } else if (choose == 3) {
-                        System.out.println("Wynik to: " + type.multiplication(first, second));
-
-                    } else if (choose == 4) {
-                        System.out.println("Wynik to: " + type.division(first, second));
-
+            try {
+                if (user.checkPassword(login, pass)) {
+                    isValid = true;
+                    info.menuProgram();
+                    choose = scanner.nextInt();
+                    switch (choose) {
+                        case 1, 2, 3, 4 -> {
+                            info.firstNumber();
+                            first = scanner.nextInt();
+                            info.secondNumber();
+                            second = scanner.nextInt();
+                            switch (choose) {
+                                case 1 -> System.out.println("Wynik to: " + type.addition(first, second));
+                                case 2 -> System.out.println("Wynik to: " + type.substraction(first, second));
+                                case 3 -> System.out.println("Wynik to: " + type.multiplication(first, second));
+                                case 4 -> System.out.println("Wynik to: " + type.division(first, second));
+                            }
+                        }
                     }
+                } else {
+                    System.out.println("Nieprawidłowy login lub hasło");
+                    isValid = false;
                 }
+            } catch (Exception e) {
+                System.out.println("Wystąpił błąd: " + e.getMessage());
+                isValid = false;
             }
-        } else {
-            System.out.println("Użytkownik nie istnieje");
-        }
+        } while (!isValid);
     }
 }
+

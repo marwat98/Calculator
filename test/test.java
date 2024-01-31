@@ -1,5 +1,6 @@
-package calculator;
+package calculator.test;
 
+import calculator.typesOfEquations;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 

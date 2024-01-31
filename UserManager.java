@@ -15,15 +15,15 @@ public class UserManager {
     public void addUser(String login, String password){
         this.login = login;
         this.password = password;
-        String hashPass = BCrypt.hashpw(password,BCrypt.gensalt());
-        users.put(login,password);
+        String hashPass = BCrypt.hashpw(password, BCrypt.gensalt());
+        users.put(login, hashPass);
     }
+
     public boolean checkPassword(String login, String password){
-        this.login = login;
-        this.password = password;
         String checkUser = users.get(login);
-        return checkUser != null && BCrypt.checkpw(password,checkUser);
+        return checkUser != null && BCrypt.checkpw(password, checkUser);
     }
+
 
 
 }
